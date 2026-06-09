@@ -200,11 +200,35 @@ def delete_product(pid):
     data = load_data()
     prod = next((p for p in data['products'] if p['id'] == pid), None)
     if prod:
-        # remove uploaded file if it exists
         if '/uploads/' in prod['img']:
             try: os.remove(prod['img'].lstrip('/'))
             except: pass
         data['products'] = [p for p in data['products'] if p['id'] != pid]
+        save_data(data)
+    return redirect(url_for('admin_products'))
+
+@app.route('/admin/product/edit/<pid>', methods=['POST'])
+@admin_required
+def edit_product(pid):
+    data = load_data()
+    prod = next((p for p in data['products'] if p['id'] == pid), None)
+    if prod:
+        prod['name']  = request.form.get('name', prod['name']).strip()
+        prod['cat']   = request.form.get('cat', prod['cat'])
+        prod['price'] = request.form.get('price', prod['price']).strip()
+        prod['desc']  = request.form.get('desc', prod['desc']).strip()
+        # optional new image
+        file = request.files.get('image')
+        if file and file.filename and allowed_file(file.filename):
+            ext   = file.filename.rsplit('.', 1)[1].lower()
+            fname = f"{uuid.uuid4().hex}.{ext}"
+            fpath = os.path.join(UPLOAD_FOLDER, fname)
+            file.save(fpath)
+            # delete old uploaded image
+            if '/uploads/' in prod['img']:
+                try: os.remove(prod['img'].lstrip('/'))
+                except: pass
+            prod['img'] = f"/static/uploads/{fname}"
         save_data(data)
     return redirect(url_for('admin_products'))
 
