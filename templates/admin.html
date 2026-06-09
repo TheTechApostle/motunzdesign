@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admin – Motunz Designs</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#07000f;--smoke:#0f001f;--panel:#130025;--card:#1c0035;--grape:#2d0060;--violet:#5b0ea6;--am:#9b59b6;--gold:#c9973a;--gilt:#e8c06a;--r:4px;--sb:240px}
+html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--ink);color:#f5eeff}
+
+/* SIDEBAR */
+.sidebar{position:fixed;top:0;left:0;height:100vh;width:var(--sb);background:linear-gradient(180deg,var(--smoke) 0%,#08001a 100%);border-right:1px solid rgba(201,151,58,.1);display:flex;flex-direction:column;z-index:1000;transition:transform .3s}
+.sb-logo{padding:1.3rem 1.1rem;border-bottom:1px solid rgba(201,151,58,.08);display:flex;align-items:center;gap:.65rem}
+.sb-gem{width:34px;height:34px;border-radius:50%;background:conic-gradient(var(--gold),var(--gilt),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:900;color:var(--grape);font-size:1rem;flex-shrink:0}
+.sb-n{font-family:'Cormorant Garamond',serif;font-weight:900;color:var(--gilt);font-size:.95rem;line-height:1}
+.sb-r{font-size:.56rem;color:#4a3060;letter-spacing:2.5px;text-transform:uppercase}
+.sb-body{flex:1;padding:.8rem .6rem;overflow-y:auto}
+.sb-sec{font-size:.56rem;letter-spacing:3px;text-transform:uppercase;color:#2e1840;padding:.4rem .6rem .2rem;margin-top:.4rem}
+.sb-a{display:flex;align-items:center;gap:.7rem;padding:.6rem .85rem;border-radius:var(--r);color:#6a5080;font-size:.8rem;cursor:pointer;transition:all .18s;border:none;background:none;width:100%;text-align:left;text-decoration:none;position:relative}
+.sb-a i{width:16px;text-align:center;font-size:.85rem}
+.sb-a:hover,.sb-a.on{background:rgba(201,151,58,.09);color:var(--gilt)}
+.sb-a.on{border-left:2px solid var(--gold)}
+.sb-badge{margin-left:auto;background:var(--violet);color:#fff;font-size:.58rem;padding:.12rem .42rem;border-radius:10px;font-weight:700}
+.sb-badge.red{background:#c0392b}
+.sb-foot{padding:.9rem;border-top:1px solid rgba(201,151,58,.08);display:flex;align-items:center;gap:.65rem}
+.sb-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--grape),var(--violet));display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--gilt);font-size:.82rem}
+.sb-un{font-size:.78rem;color:#8070a0;flex:1}
+.sb-logout{background:none;border:none;color:#4a3060;cursor:pointer;font-size:.8rem;transition:color .2s}
+.sb-logout:hover{color:#ff6b6b}
+
+/* TOPBAR */
+.topbar{position:fixed;top:0;left:var(--sb);right:0;height:58px;background:rgba(15,0,31,.96);backdrop-filter:blur(14px);border-bottom:1px solid rgba(201,151,58,.08);display:flex;align-items:center;justify-content:space-between;padding:0 1.4rem;z-index:900}
+.pg-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:700;color:var(--gilt)}
+.top-r{display:flex;align-items:center;gap:.7rem}
+.tb-btn{background:rgba(255,255,255,.04);border:1px solid rgba(201,151,58,.14);color:#9980b0;border-radius:var(--r);padding:.38rem .8rem;font-size:.76rem;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block}
+.tb-btn:hover{background:rgba(201,151,58,.08);color:var(--gilt)}
+.ham-admin{display:none;background:none;border:none;color:var(--gold);font-size:1.1rem;cursor:pointer}
+
+/* MAIN */
+.main{margin-left:var(--sb);padding-top:58px;min-height:100vh}
+.content{padding:1.6rem;max-width:1080px}
+
+/* ALERTS */
+.al{padding:.6rem .9rem;border-radius:var(--r);font-size:.8rem;margin-bottom:1.1rem;display:flex;align-items:center;gap:.5rem}
+.al-ok{background:rgba(76,175,80,.1);border-left:3px solid #4caf50;color:#81c784}
+.al-err{background:rgba(255,107,107,.08);border-left:3px solid #ff6b6b;color:#ff8a80}
+
+/* DASH CARDS */
+.dcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.9rem;margin-bottom:1.8rem}
+.dc{background:var(--card);border:1px solid rgba(201,151,58,.1);border-radius:6px;padding:1.3rem 1.1rem;display:flex;align-items:flex-start;gap:.9rem;transition:transform .2s}
+.dc:hover{transform:translateY(-3px)}
+.dc-ico{width:42px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0}
+.dc-num{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:900;color:var(--gilt);line-height:1}
+.dc-lbl{font-size:.62rem;letter-spacing:1.5px;text-transform:uppercase;color:#4a3060;margin-top:.12rem}
+.dc-trend{font-size:.68rem;margin-top:.25rem;color:#6a5080}
+
+/* TABLES */
+.tbl-wrap{background:var(--card);border:1px solid rgba(201,151,58,.1);border-radius:6px;overflow:hidden;overflow-x:auto}
+.mz-tbl{width:100%;border-collapse:collapse}
+.mz-tbl th{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--am);padding:.65rem .85rem;border-bottom:1px solid rgba(201,151,58,.08);text-align:left;white-space:nowrap}
+.mz-tbl td{padding:.65rem .85rem;border-bottom:1px solid rgba(255,255,255,.025);font-size:.8rem;color:#b099c8}
+.mz-tbl tr:last-child td{border:none}
+.mz-tbl tr:hover td{background:rgba(255,255,255,.02)}
+.sbadge{display:inline-block;padding:.18rem .55rem;border-radius:10px;font-size:.62rem;letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.s-new{background:rgba(201,151,58,.15);color:var(--gilt)}
+.s-proc{background:rgba(91,14,166,.2);color:#b08fe0}
+.s-done{background:rgba(76,175,80,.1);color:#81c784}
+.s-unread{background:rgba(201,151,58,.12);color:var(--gilt)}
+
+/* PRODUCT GRID (admin) */
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:.9rem}
+.apc{background:var(--card);border:1px solid rgba(201,151,58,.1);border-radius:6px;overflow:hidden;position:relative;transition:transform .2s}
+.apc:hover{transform:translateY(-3px)}
+.apc img{width:100%;height:165px;object-fit:cover;display:block}
+.apc-body{padding:.75rem .9rem .9rem}
+.apc-cat{font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--am)}
+.apc-name{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:700;color:var(--gilt);line-height:1.2}
+.apc-price{font-size:.78rem;color:var(--gold);font-weight:700;margin-top:.3rem}
+.apc-del{position:absolute;top:.5rem;right:.5rem;background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.28);color:#ff8a80;border-radius:var(--r);width:26px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7rem;transition:all .2s}
+.apc-del:hover{background:#ff6b6b;color:#fff;border-color:#ff6b6b}
+
+/* UPLOAD */
+.upanel{background:var(--card);border:1px solid rgba(201,151,58,.13);border-radius:8px;padding:1.7rem}
+.dropz{border:2px dashed rgba(201,151,58,.3);border-radius:6px;padding:2.5rem;text-align:center;cursor:pointer;transition:all .2s;position:relative}
+.dropz:hover,.dropz.drag{background:rgba(201,151,58,.04);border-color:var(--gold)}
+.dropz i{font-size:2.3rem;color:var(--gold);display:block;margin-bottom:.7rem}
+.dropz p{color:var(--gilt);font-weight:600;margin-bottom:.25rem;font-size:.95rem}
+.dropz small{color:#4a3060;font-size:.76rem}
+.dprev{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.9rem}
+.dprev img{width:80px;height:80px;object-fit:cover;border:2px solid rgba(201,151,58,.25);border-radius:4px}
+.mz-f{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(201,151,58,.18);border-radius:var(--r);color:#f5eeff;padding:.58rem .85rem;font-size:.84rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;margin-bottom:.6rem}
+.mz-f:focus{border-color:var(--gold)}
+.mz-f option{background:#1a0035}
+.lbl{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--am);display:block;margin-bottom:.38rem}
+.btn-add{background:linear-gradient(135deg,var(--gold),var(--gilt));color:var(--ink);border:none;border-radius:var(--r);padding:.65rem 1.8rem;font-weight:700;font-size:.82rem;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-add:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(201,151,58,.28)}
+.btn-del-all{background:rgba(255,107,107,.08);border:1px solid rgba(255,107,107,.25);color:#ff8a80;border-radius:var(--r);padding:.55rem 1.2rem;font-size:.76rem;cursor:pointer;transition:all .2s}
+.btn-del-all:hover{background:#ff6b6b;color:#fff}
+
+/* MESSAGES */
+.msg-list{display:flex;flex-direction:column;gap:.7rem}
+.mc{background:var(--card);border:1px solid rgba(201,151,58,.08);border-radius:6px;padding:1rem 1.2rem;display:flex;align-items:flex-start;gap:.9rem;transition:border-color .2s}
+.mc:hover{border-color:rgba(201,151,58,.25)}
+.mc.unread{border-left:3px solid var(--gold)}
+.mc-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--grape),var(--violet));display:flex;align-items:center;justify-content:center;color:var(--gilt);font-weight:900;font-size:.9rem;flex-shrink:0}
+.mc-name{font-size:.85rem;font-weight:700;color:#c0a8e0}
+.mc.unread .mc-name{color:var(--gilt)}
+.mc-sub{font-size:.75rem;color:var(--gold)}
+.mc-pre{font-size:.73rem;color:#4a3060;margin-top:.22rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px}
+.mc-time{font-size:.65rem;color:#3d2560;margin-left:auto;white-space:nowrap}
+
+/* SLIDER MANAGER */
+.slide-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-bottom:2rem}
+.scard{background:var(--card);border:1px solid rgba(201,151,58,.12);border-radius:6px;overflow:hidden;position:relative}
+.scard img{width:100%;height:130px;object-fit:cover;display:block}
+.scard-body{padding:.75rem .9rem}
+.scard-tag{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--am)}
+.scard-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--gilt)}
+.scard-del{position:absolute;top:.4rem;right:.4rem;background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.25);color:#ff8a80;border-radius:var(--r);width:26px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.7rem;transition:all .2s}
+.scard-del:hover{background:#ff6b6b;color:#fff}
+
+/* SETTINGS */
+.sset{background:var(--card);border:1px solid rgba(201,151,58,.1);border-radius:8px;padding:1.4rem;margin-bottom:1rem}
+.sset h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gilt);margin-bottom:1rem}
+.tog-row{display:flex;align-items:center;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.tog-row:last-child{border:none}
+.tog-lbl{font-size:.8rem;color:#a090c0}
+.tog-sub{font-size:.67rem;color:#4a3060;margin-top:.1rem}
+.tog{position:relative;width:38px;height:20px;cursor:pointer;flex-shrink:0}
+.tog input{display:none}
+.tog-tr{position:absolute;inset:0;background:rgba(255,255,255,.08);border-radius:10px;transition:background .2s;border:1px solid rgba(201,151,58,.15)}
+.tog input:checked+.tog-tr{background:var(--grape);border-color:var(--gold)}
+.tog-th{position:absolute;top:3px;left:3px;width:14px;height:14px;background:var(--am);border-radius:50%;transition:transform .2s;pointer-events:none}
+.tog input:checked+.tog-tr+.tog-th{transform:translateX(18px);background:var(--gilt)}
+
+/* OVERLAY */
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999}
+.sb-overlay.open{display:block}
+
+/* FILE PREVIEW CONTAINER */
+#previewImg{display:none;max-height:180px;object-fit:contain;border:1px solid rgba(201,151,58,.3);border-radius:4px;margin-top:.8rem}
+#slidePreviewImg{display:none;max-height:130px;object-fit:contain;border:1px solid rgba(201,151,58,.3);border-radius:4px;margin-top:.8rem}
+
+@media(max-width:900px){
+  :root{--sb:0px}
+  .sidebar{transform:translateX(-100%);width:240px}
+  .sidebar.open{transform:translateX(0)}
+  .topbar{left:0}
+  .main{margin-left:0}
+  .ham-admin{display:block}
+}
+@media(max-width:580px){
+  .dcards{grid-template-columns:1fr 1fr}
+  .ag{grid-template-columns:1fr 1fr}
+  .content{padding:1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="sb-overlay" id="sbOv" onclick="closeSB()"></div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-gem">M</div>
+    <div><div class="sb-n">MOTUNZ</div><div class="sb-r">Admin Panel</div></div>
+  </div>
+  <div class="sb-body">
+    <div class="sb-sec">Main</div>
+    <a class="sb-a {% if page=='dashboard' %}on{% endif %}" href="/admin"><i class="fa fa-th-large"></i> Dashboard</a>
+    <a class="sb-a {% if page=='products' %}on{% endif %}" href="/admin/products"><i class="fa fa-box-open"></i> Products <span class="sb-badge">{{ stats.products }}</span></a>
+    <a class="sb-a {% if page=='upload' %}on{% endif %}" href="/admin/upload"><i class="fa fa-cloud-upload-alt"></i> Upload Product</a>
+    <div class="sb-sec">Content</div>
+    <a class="sb-a {% if page=='slider' %}on{% endif %}" href="/admin/slider"><i class="fa fa-images"></i> Hero Slider</a>
+    <div class="sb-sec">Communication</div>
+    <a class="sb-a {% if page=='messages' %}on{% endif %}" href="/admin/messages"><i class="fa fa-envelope"></i> Messages {% if stats.unread > 0 %}<span class="sb-badge red">{{ stats.unread }}</span>{% endif %}</a>
+    <a class="sb-a {% if page=='orders' %}on{% endif %}" href="/admin/orders"><i class="fa fa-shopping-bag"></i> Orders {% if stats.new_orders > 0 %}<span class="sb-badge">{{ stats.new_orders }}</span>{% endif %}</a>
+    <div class="sb-sec">System</div>
+    <a class="sb-a {% if page=='settings' %}on{% endif %}" href="/admin/settings"><i class="fa fa-cog"></i> Settings</a>
+    <a class="sb-a" href="/" target="_blank"><i class="fa fa-external-link-alt"></i> View Website</a>
+  </div>
+  <div class="sb-foot">
+    <div class="sb-av">A</div>
+    <div class="sb-un">Admin</div>
+    <a href="/admin/logout" class="sb-logout" title="Logout"><i class="fa fa-sign-out-alt"></i></a>
+  </div>
+</nav>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:.9rem">
+    <button class="ham-admin" onclick="openSB()"><i class="fa fa-bars"></i></button>
+    <span class="pg-title">{% if page=='dashboard' %}Dashboard{% elif page=='products' %}Products{% elif page=='upload' %}Upload Product{% elif page=='slider' %}Hero Slider{% elif page=='messages' %}Messages{% elif page=='orders' %}Orders{% elif page=='settings' %}Settings{% endif %}</span>
+  </div>
+  <div class="top-r">
+    <a class="tb-btn" href="/admin/upload"><i class="fa fa-plus"></i> Add Product</a>
+    <a class="tb-btn" href="/admin/logout"><i class="fa fa-sign-out-alt"></i> Logout</a>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<main class="main"><div class="content">
+
+{% if success %}<div class="al al-ok"><i class="fa fa-check-circle"></i> {{ success }}</div>{% endif %}
+{% if error %}<div class="al al-err"><i class="fa fa-exclamation-circle"></i> {{ error }}</div>{% endif %}
+
+<!-- ── DASHBOARD ── -->
+{% if page == 'dashboard' %}
+<div class="dcards">
+  <div class="dc"><div class="dc-ico" style="background:rgba(201,151,58,.12);color:var(--gold)"><i class="fa fa-box-open"></i></div><div><div class="dc-num">{{ stats.products }}</div><div class="dc-lbl">Products</div><div class="dc-trend">↑ Live in catalogue</div></div></div>
+  <div class="dc"><div class="dc-ico" style="background:rgba(91,14,166,.2);color:var(--am)"><i class="fa fa-envelope"></i></div><div><div class="dc-num">{{ stats.messages }}</div><div class="dc-lbl">Messages</div>{% if stats.unread %}<div class="dc-trend" style="color:var(--gilt)">{{ stats.unread }} unread</div>{% endif %}</div></div>
+  <div class="dc"><div class="dc-ico" style="background:rgba(76,175,80,.1);color:#81c784"><i class="fa fa-shopping-bag"></i></div><div><div class="dc-num">{{ stats.orders }}</div><div class="dc-lbl">Orders</div>{% if stats.new_orders %}<div class="dc-trend" style="color:var(--gilt)">{{ stats.new_orders }} new</div>{% endif %}</div></div>
+  <div class="dc"><div class="dc-ico" style="background:rgba(255,193,7,.08);color:#ffd54f"><i class="fa fa-images"></i></div><div><div class="dc-num">{{ slider|length }}</div><div class="dc-lbl">Slides</div><div class="dc-trend">Hero slider</div></div></div>
+</div>
+<h4 style="font-family:'Cormorant Garamond',serif;color:var(--gilt);font-size:1.15rem;margin-bottom:.9rem">Recent Orders</h4>
+<div class="tbl-wrap">
+  <table class="mz-tbl">
+    <thead><tr><th>Client</th><th>Product</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for o in orders[:5] %}
+    <tr><td>{{ o.client }}</td><td>{{ o.product }}</td><td>{{ o.amount }}</td><td>{{ o.date }}</td>
+    <td><span class="sbadge s-{{ o.status[:4] }}">{{ o.status }}</span></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div style="margin-top:1rem"><a class="tb-btn" href="/admin/orders">View All Orders →</a></div>
+
+<!-- ── PRODUCTS ── -->
+{% elif page == 'products' %}
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.3rem;flex-wrap:wrap;gap:.6rem">
+  <p style="color:#4a3060;font-size:.78rem">{{ products|length }} products in catalogue</p>
+  <a class="btn-add" href="/admin/upload"><i class="fa fa-plus me-1"></i> Add Product</a>
+</div>
+<div class="ag">
+{% for p in products %}
+<div class="apc">
+  <img src="{{ p.img }}" alt="{{ p.name }}"/>
+  {% if not p.id.startswith('p') or p.id[1:]|int(0) > 6 or p.id|length > 3 %}
+  <form method="POST" action="/admin/product/delete/{{ p.id }}" style="display:inline" onsubmit="return confirm('Remove this product?')">
+    <button class="apc-del" type="submit" title="Delete"><i class="fa fa-trash"></i></button>
+  </form>
+  {% endif %}
+  <div class="apc-body">
+    <div class="apc-cat">{{ {'women':'Women','men':'Men','gele':'Auto Gele','fascinator':'Fascinator','headband':'Head Band','bonnet':'Bonnet'}.get(p.cat, p.cat) }}</div>
+    <div class="apc-name">{{ p.name }}</div>
+    <div class="apc-price">{{ p.price }}</div>
+  </div>
+</div>
+{% endfor %}
+</div>
+
+<!-- ── UPLOAD ── -->
+{% elif page == 'upload' %}
+<div class="upanel">
+  <form method="POST" enctype="multipart/form-data" id="upForm">
+    <div class="dropz" id="dropZ" onclick="document.getElementById('fIn').click()">
+      <i class="fa fa-cloud-upload-alt"></i>
+      <p>Click or drag an image here</p>
+      <small>JPG, PNG, WebP · Max 5MB</small>
+    </div>
+    <input type="file" id="fIn" name="image" accept="image/*" style="display:none" onchange="prevImg(event)" required/>
+    <img id="previewImg" src="" alt="preview"/>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:1.1rem">
+      <div><label class="lbl">Product Name *</label><input class="mz-f" name="name" type="text" placeholder="e.g. Gold Sequin Auto Gele" required/></div>
+      <div><label class="lbl">Category *</label>
+        <select class="mz-f" name="cat" required>
+          <option value="">Select Category</option>
+          <option value="women">Women – Turban Cap</option>
+          <option value="gele">Auto Gele</option>
+          <option value="fascinator">Fascinator</option>
+          <option value="men">Men's Cap</option>
+          <option value="headband">Head Band</option>
+          <option value="bonnet">Bonnet</option>
+        </select>
+      </div>
+      <div><label class="lbl">Price</label><input class="mz-f" name="price" type="text" placeholder="e.g. ₦15,000 or Contact Us"/></div>
+      <div><label class="lbl">Short Description</label><input class="mz-f" name="desc" type="text" placeholder="Brief product description"/></div>
+    </div>
+    <button class="btn-add" type="submit"><i class="fa fa-plus me-1"></i>Add to Catalogue</button>
+  </form>
+</div>
+
+<!-- ── SLIDER ── -->
+{% elif page == 'slider' %}
+<div class="slide-grid">
+{% for s in slider %}
+<div class="scard">
+  <img src="{{ s.img }}" alt="{{ s.title }}"/>
+  {% if not s.id in ['s1','s2','s3','s4'] %}
+  <form method="POST" action="/admin/slider" onsubmit="return confirm('Remove this slide?')">
+    <input type="hidden" name="action" value="delete"/>
+    <input type="hidden" name="sid" value="{{ s.id }}"/>
+    <button class="scard-del" type="submit"><i class="fa fa-trash"></i></button>
+  </form>
+  {% endif %}
+  <div class="scard-body">
+    <div class="scard-tag">{{ s.tag }}</div>
+    <div class="scard-title">{{ s.title }} {{ s.title2 }}</div>
+  </div>
+</div>
+{% endfor %}
+</div>
+
+<div class="upanel">
+  <h4 style="font-family:'Cormorant Garamond',serif;color:var(--gilt);font-size:1.1rem;margin-bottom:1.2rem">Add New Slide</h4>
+  <form method="POST" enctype="multipart/form-data" action="/admin/slider">
+    <input type="hidden" name="action" value="add"/>
+    <div class="dropz" onclick="document.getElementById('sIn').click()">
+      <i class="fa fa-image"></i><p>Click to upload slide image</p><small>Full-width hero image recommended</small>
+    </div>
+    <input type="file" id="sIn" name="image" accept="image/*" style="display:none" onchange="prevSlide(event)" required/>
+    <img id="slidePreviewImg" src="" alt="slide preview"/>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:1rem">
+      <div><label class="lbl">Tag line</label><input class="mz-f" name="tag" type="text" placeholder="e.g. New Collection"/></div>
+      <div><label class="lbl">Title Line 1 *</label><input class="mz-f" name="title" type="text" placeholder="e.g. Wear Your Crown" required/></div>
+      <div><label class="lbl">Title Line 2</label><input class="mz-f" name="title2" type="text" placeholder="e.g. with Confidence"/></div>
+      <div><label class="lbl">Subtitle</label><input class="mz-f" name="sub" type="text" placeholder="Short tagline under title"/></div>
+      <div><label class="lbl">Button 1 Text</label><input class="mz-f" name="btn1" type="text" placeholder="e.g. Shop Now" value="Explore Collection"/></div>
+      <div><label class="lbl">Button 2 Text (optional)</label><input class="mz-f" name="btn2" type="text" placeholder="Leave blank to hide"/></div>
+    </div>
+    <button class="btn-add" type="submit"><i class="fa fa-plus me-1"></i>Add Slide</button>
+  </form>
+</div>
+
+<!-- ── MESSAGES ── -->
+{% elif page == 'messages' %}
+<div class="msg-list">
+{% for m in messages %}
+<div class="mc {% if not m.read %}unread{% endif %}">
+  <div class="mc-av">{{ m.name[0]|upper }}</div>
+  <div style="flex:1;min-width:0">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:.5rem">
+      <div class="mc-name">{{ m.name }} <span style="color:#4a3060;font-size:.7rem;font-weight:400">· {{ m.phone }}</span></div>
+      <div class="mc-time">{{ m.date }}</div>
+    </div>
+    <div class="mc-sub">{{ m.subject }}</div>
+    <div class="mc-pre">{{ m.message }}</div>
+  </div>
+</div>
+{% else %}
+<p style="color:#3d2560;text-align:center;padding:2rem">No messages yet. Messages from the website contact form appear here.</p>
+{% endfor %}
+</div>
+
+<!-- ── ORDERS ── -->
+{% elif page == 'orders' %}
+<div class="tbl-wrap">
+  <table class="mz-tbl">
+    <thead><tr><th>#</th><th>Client</th><th>Product</th><th>Amount</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody>
+    {% for o in orders %}
+    <tr>
+      <td style="color:#3d2560">{{ o.id }}</td>
+      <td>{{ o.client }}</td>
+      <td>{{ o.product }}</td>
+      <td>{{ o.amount }}</td>
+      <td>{{ o.date }}</td>
+      <td><span class="sbadge s-{{ o.status[:4] }}">{{ o.status }}</span></td>
+      <td>
+        <form method="POST" action="/admin/order/status/{{ o.id }}" style="display:inline">
+          <select name="status" onchange="this.form.submit()" style="background:rgba(255,255,255,.05);border:1px solid rgba(201,151,58,.15);color:#a090c0;border-radius:var(--r);padding:.2rem .5rem;font-size:.7rem;cursor:pointer;outline:none">
+            <option value="new" {% if o.status=='new' %}selected{% endif %}>New</option>
+            <option value="processing" {% if o.status=='processing' %}selected{% endif %}>Processing</option>
+            <option value="completed" {% if o.status=='completed' %}selected{% endif %}>Completed</option>
+          </select>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- ── SETTINGS ── -->
+{% elif page == 'settings' %}
+<div class="sset">
+  <h4>Change Password</h4>
+  <form method="POST">
+    <label class="lbl">Current Password</label>
+    <input class="mz-f" name="current_pass" type="password" placeholder="Current password"/>
+    <label class="lbl">New Password</label>
+    <input class="mz-f" name="new_pass" type="password" placeholder="New password (min. 6 characters)"/>
+    <label class="lbl">Confirm New Password</label>
+    <input class="mz-f" name="confirm_pass" type="password" placeholder="Repeat new password"/>
+    <button class="btn-add" type="submit">Update Password</button>
+  </form>
+</div>
+<div class="sset">
+  <h4>Notifications</h4>
+  <div class="tog-row"><div><div class="tog-lbl">New order alerts</div><div class="tog-sub">Get notified when a customer places an order</div></div><label class="tog"><input type="checkbox" checked/><div class="tog-tr"></div><div class="tog-th"></div></label></div>
+  <div class="tog-row"><div><div class="tog-lbl">New message alerts</div><div class="tog-sub">Notify when a contact form message arrives</div></div><label class="tog"><input type="checkbox" checked/><div class="tog-tr"></div><div class="tog-th"></div></label></div>
+  <div class="tog-row"><div><div class="tog-lbl">Training enquiries</div><div class="tog-sub">Notify when someone enquires about training</div></div><label class="tog"><input type="checkbox"/><div class="tog-tr"></div><div class="tog-th"></div></label></div>
+</div>
+<div class="sset">
+  <h4>Site Info</h4>
+  <div style="font-size:.8rem;color:#4a3060;line-height:1.9">
+    <div>📍 4, Elemuren Street, Haruna, Ikorodu, Lagos</div>
+    <div>📞 08063407927 · 08058808282 · 07039544529</div>
+    <div>📧 motunzdesigns@gmail.com</div>
+    <div>▶ youtube.com/@motunzdesigns</div>
+  </div>
+</div>
+{% endif %}
+
+</div></main>
+
+<script>
+function openSB(){document.getElementById('sidebar').classList.add('open');document.getElementById('sbOv').classList.add('open');}
+function closeSB(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sbOv').classList.remove('open');}
+
+// drag-drop
+const dz=document.getElementById('dropZ');
+if(dz){
+  dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag');});
+  dz.addEventListener('dragleave',()=>dz.classList.remove('drag'));
+  dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag');
+    const dt=new DataTransfer();[...e.dataTransfer.files].forEach(f=>dt.items.add(f));
+    const fi=document.getElementById('fIn');fi.files=dt.files;
+    prevImg({target:fi});
+  });
+}
+function prevImg(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{const img=document.getElementById('previewImg');img.src=ev.target.result;img.style.display='block';};r.readAsDataURL(f);document.querySelector('#dropZ p').textContent=f.name+' ✓';}
+function prevSlide(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{const img=document.getElementById('slidePreviewImg');img.src=ev.target.result;img.style.display='block';};r.readAsDataURL(f);}
+</script>
+</body>
+</html>

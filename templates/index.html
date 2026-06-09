@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Motunz Designs – Premium Headwear Lagos</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<style>
+:root {
+  --pur: #3d0066;
+  --pur2: #5a0099;
+  --pur3: #7b14c0;
+  --pur-light: #f3e8ff;
+  --pur-mid: #c084fc;
+  --gold: #c9940a;
+  --gold2: #e8b422;
+  --gold3: #fcd34d;
+  --white: #ffffff;
+  --off: #faf8ff;
+  --text: #1a0033;
+  --muted: #7c5c99;
+  --border: #e2d4f5;
+  --r: 3px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--text); overflow-x: hidden; }
+
+/* ─── NAVBAR ─────────────────────────────── */
+.mz-nav {
+  position: fixed; top: 0; width: 100%; z-index: 1050;
+  padding: 0; transition: all .3s ease;
+  background: transparent;
+}
+.mz-nav.stuck {
+  background: rgba(61,0,102,.97);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 2px 24px rgba(0,0,0,.25);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .9rem 2rem; max-width: 1300px; margin: 0 auto;
+}
+.mz-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo-gem {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--gold2); display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.15rem;
+  color: var(--pur); flex-shrink: 0; box-shadow: 0 0 0 2px var(--gold3);
+}
+.logo-words .lw1 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 900; color: #fff; letter-spacing: 2px; display: block; }
+.logo-words .lw2 { font-size: .52rem; color: var(--gold3); letter-spacing: 4px; text-transform: uppercase; display: block; }
+.nav-links { display: flex; align-items: center; gap: 1.8rem; }
+.nav-links a {
+  color: rgba(255,255,255,.8); font-size: .74rem; letter-spacing: 1.5px;
+  text-transform: uppercase; text-decoration: none; font-weight: 500;
+  position: relative; padding-bottom: 2px; transition: color .2s;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 1px; background: var(--gold2); transition: width .3s;
+}
+.nav-links a:hover { color: var(--gold3); }
+.nav-links a:hover::after { width: 100%; }
+.btn-nav {
+  background: var(--gold2); color: var(--pur); border: none; border-radius: var(--r);
+  padding: .42rem 1.3rem; font-size: .74rem; letter-spacing: 1.5px;
+  text-transform: uppercase; font-weight: 700; cursor: pointer;
+  transition: all .22s; font-family: 'Inter', sans-serif;
+}
+.btn-nav:hover { background: var(--gold3); box-shadow: 0 4px 14px rgba(201,148,10,.4); }
+.ham-btn {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 4px;
+}
+.ham-btn span { display: block; width: 22px; height: 1.5px; background: #fff; transition: all .3s; }
+.ham-btn.open span:nth-child(1) { transform: rotate(45deg) translate(4px,4px); }
+.ham-btn.open span:nth-child(2) { opacity: 0; }
+.ham-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(4px,-4px); }
+.mob-overlay {
+  display: none; position: fixed; inset: 0; background: var(--pur);
+  z-index: 1049; flex-direction: column; align-items: center; justify-content: center; gap: 2.4rem;
+}
+.mob-overlay.open { display: flex; }
+.mob-overlay a {
+  color: #fff; font-family: 'Playfair Display', serif; font-size: 2rem;
+  font-weight: 700; text-decoration: none; transition: color .2s;
+}
+.mob-overlay a:hover { color: var(--gold3); }
+
+/* ─── HERO SLIDER ─────────────────────────── */
+.hero {
+  height: 100vh; min-height: 600px; position: relative; overflow: hidden;
+}
+.hero-slide {
+  position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease;
+  background-size: cover; background-position: center;
+}
+.hero-slide.on { opacity: 1; }
+.hero-slide::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(105deg, rgba(61,0,102,.85) 0%, rgba(61,0,102,.5) 50%, rgba(0,0,0,.15) 100%);
+}
+.hero-body {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; align-items: center; padding: 0 2rem;
+}
+.hero-inner { max-width: 620px; padding-left: 2rem; }
+.h-tag {
+  display: inline-block; background: rgba(232,180,34,.18);
+  border: 1px solid rgba(232,180,34,.55); color: var(--gold3);
+  font-size: .63rem; letter-spacing: 4px; text-transform: uppercase;
+  padding: .28rem .85rem; margin-bottom: 1.2rem;
+}
+.h-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.6rem, 6vw, 4.8rem);
+  font-weight: 900; color: #fff; line-height: 1.0; margin-bottom: .3rem;
+}
+.h-title em { font-style: italic; color: var(--gold3); }
+.h-sub {
+  color: rgba(255,255,255,.72); font-size: clamp(.88rem,1.8vw,1rem);
+  font-weight: 300; max-width: 430px; margin: .85rem 0 2rem; line-height: 1.8;
+}
+.h-btns { display: flex; gap: .85rem; flex-wrap: wrap; }
+.btn-gold {
+  background: var(--gold2); color: var(--pur); border: none; border-radius: var(--r);
+  padding: .74rem 2rem; font-weight: 700; font-size: .8rem; letter-spacing: 2px;
+  text-transform: uppercase; cursor: pointer; transition: all .22s;
+  text-decoration: none; display: inline-block;
+}
+.btn-gold:hover { background: var(--gold3); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(201,148,10,.4); color: var(--pur); }
+.btn-ghost-w {
+  background: transparent; border: 1.5px solid rgba(255,255,255,.55); color: #fff;
+  border-radius: var(--r); padding: .72rem 1.7rem; font-weight: 500; font-size: .8rem;
+  letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+  transition: all .22s; text-decoration: none; display: inline-block;
+}
+.btn-ghost-w:hover { background: rgba(255,255,255,.12); border-color: #fff; color: #fff; }
+/* slider controls */
+.s-prev, .s-next {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+  width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.3);
+  background: rgba(255,255,255,.1); backdrop-filter: blur(6px);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all .2s; font-size: .85rem;
+}
+.s-prev { left: 1.6rem; } .s-next { right: 1.6rem; }
+.s-prev:hover, .s-next:hover { background: rgba(255,255,255,.22); border-color: var(--gold2); color: var(--gold3); }
+.s-dots { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; gap: 6px; align-items: center; }
+.sdot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.35); cursor: pointer; transition: all .3s; border: none; padding: 0; }
+.sdot.on { background: var(--gold2); width: 22px; border-radius: 4px; }
+.scroll-cue {
+  position: absolute; bottom: 1.8rem; right: 2.2rem; z-index: 3;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  color: rgba(255,255,255,.45); font-size: .58rem; letter-spacing: 3px; text-transform: uppercase;
+}
+.scroll-line { width: 1px; height: 36px; background: linear-gradient(to bottom, rgba(255,255,255,.5), transparent); animation: scrollp 2s infinite; }
+@keyframes scrollp { 0%,100%{opacity:.35}50%{opacity:1} }
+
+/* ─── TICKER ──────────────────────────────── */
+.ticker { background: var(--pur2); padding: .5rem 0; overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(255,255,255,.06); }
+.ticker-track { display: inline-flex; animation: tickroll 26s linear infinite; }
+.ticker-track span { font-size: .63rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(252,211,77,.7); padding: 0 1.8rem; }
+.ticker-track .tsep { color: var(--gold2); font-size: .45rem; vertical-align: middle; }
+@keyframes tickroll { to { transform: translateX(-50%); } }
+
+/* ─── STATS BAR ──────────────────────────── */
+.stats-bar { background: var(--off); border-bottom: 1px solid var(--border); }
+.stat-col { padding: 2rem 1rem; text-align: center; border-right: 1px solid var(--border); }
+.stat-col:last-child { border-right: none; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 2.7rem; font-weight: 900; color: var(--pur); display: block; line-height: 1; }
+.stat-lbl { font-size: .62rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); margin-top: .25rem; display: block; }
+
+/* ─── SECTION BASE ───────────────────────── */
+section { padding: 5.5rem 0; }
+.sec-purple { background: var(--pur); }
+.sec-light { background: var(--off); }
+.sec-white { background: #fff; }
+.eyebrow { font-size: .62rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .55rem; font-weight: 600; }
+.eyebrow-light { color: var(--gold3); }
+.sec-h { font-family: 'Playfair Display', serif; font-size: clamp(2rem,4vw,2.9rem); font-weight: 900; color: var(--text); line-height: 1.1; margin-bottom: .6rem; }
+.sec-h-light { color: #fff; }
+.gold-rule { width: 44px; height: 2px; background: var(--gold2); margin-bottom: 2rem; }
+.gold-rule-center { margin: 0 auto 2rem; }
+
+/* ─── CATALOGUE ──────────────────────────── */
+.filt-wrap { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 2.2rem; }
+.filt {
+  background: transparent; border: 1px solid var(--border); color: var(--muted);
+  padding: .38rem 1.1rem; border-radius: 20px; font-size: .7rem; letter-spacing: 1px;
+  text-transform: uppercase; cursor: pointer; transition: all .18s; font-family: 'Inter', sans-serif; font-weight: 500;
+}
+.filt.on, .filt:hover { background: var(--pur); color: var(--gold3); border-color: var(--pur); font-weight: 600; }
+
+.pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap: 1.4rem; }
+.pc {
+  background: #fff; border: 1px solid var(--border); border-radius: var(--r);
+  overflow: hidden; cursor: pointer; transition: transform .3s, box-shadow .3s; position: relative;
+}
+.pc:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(61,0,102,.14); }
+.pc:hover .pc-ov { opacity: 1; }
+.pc-iw { overflow: hidden; position: relative; }
+.pc img { width: 100%; height: 255px; object-fit: cover; display: block; transition: transform .5s; }
+.pc:hover img { transform: scale(1.04); }
+.pc-ov {
+  position: absolute; inset: 0;
+  background: rgba(61,0,102,.58);
+  opacity: 0; transition: opacity .3s;
+  display: flex; align-items: center; justify-content: center;
+}
+.pc-ov button {
+  background: var(--gold2); color: var(--pur); border: none; border-radius: var(--r);
+  padding: .55rem 1.5rem; font-weight: 700; font-size: .76rem; letter-spacing: 1.5px;
+  text-transform: uppercase; cursor: pointer; transform: translateY(10px); transition: transform .2s .1s;
+}
+.pc:hover .pc-ov button { transform: translateY(0); }
+.pc-body { padding: .9rem 1rem 1.1rem; }
+.pc-cat { font-size: .58rem; letter-spacing: 2px; text-transform: uppercase; color: var(--pur3); margin-bottom: .25rem; font-weight: 600; }
+.pc-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.pc-desc { font-size: .75rem; color: var(--muted); line-height: 1.55; margin-top: .22rem; }
+.pc-price { font-size: .88rem; font-weight: 700; color: var(--gold); margin-top: .45rem; }
+.pc-new { position: absolute; top: .7rem; left: .7rem; background: var(--pur); color: var(--gold3); font-size: .58rem; letter-spacing: 1.5px; text-transform: uppercase; padding: .2rem .6rem; font-weight: 600; }
+
+/* ─── TESTIMONIAL STRIP ──────────────────── */
+.tstrip { background: var(--pur-light); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 3rem 0; }
+.tstrip-quote { font-family: 'Playfair Display', serif; font-size: clamp(1.15rem,3vw,1.65rem); font-style: italic; color: var(--pur); max-width: 640px; margin: 0 auto; line-height: 1.5; text-align: center; }
+.tstrip-attr { font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: .8rem; text-align: center; }
+
+/* ─── TRAINING CARDS ─────────────────────── */
+.tr-card {
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--r); padding: 2.1rem; height: 100%; transition: all .3s; position: relative; overflow: hidden;
+}
+.tr-card::before { content: ''; position: absolute; top: 0; left: 0; width: 0; height: 3px; background: var(--gold2); transition: width .35s; }
+.tr-card:hover::before { width: 100%; }
+.tr-card:hover { background: rgba(255,255,255,.1); transform: translateY(-3px); }
+.tr-card.feat { border-color: var(--gold2); }
+.tr-card.feat::before { width: 100%; }
+.tr-ico {
+  width: 48px; height: 48px; border-radius: var(--r);
+  background: rgba(232,180,34,.15); border: 1px solid rgba(232,180,34,.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; color: var(--gold3); margin-bottom: 1.2rem;
+}
+.tr-card h4 { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: #fff; margin-bottom: .5rem; }
+.tr-card p { font-size: .82rem; color: rgba(255,255,255,.6); line-height: 1.75; margin-bottom: .9rem; }
+.tr-card ul { list-style: none; padding: 0; margin-bottom: 1.2rem; }
+.tr-card ul li { font-size: .78rem; color: rgba(255,255,255,.55); padding: .27rem 0 .27rem 1.1rem; position: relative; }
+.tr-card ul li::before { content: '—'; position: absolute; left: 0; color: var(--gold2); font-size: .7rem; }
+.tr-badge { display: inline-block; background: rgba(232,180,34,.15); border: 1px solid rgba(232,180,34,.3); color: var(--gold3); font-size: .68rem; padding: .26rem .8rem; font-weight: 600; letter-spacing: .5px; }
+.tr-card.feat .tr-badge { background: var(--gold2); color: var(--pur); border-color: var(--gold2); }
+.btn-tr { background: var(--gold2); color: var(--pur); border: none; border-radius: var(--r); padding: .5rem 1.3rem; font-weight: 700; font-size: .74rem; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all .2s; text-decoration: none; display: inline-block; margin-top: .85rem; }
+.btn-tr:hover { background: var(--gold3); color: var(--pur); }
+.btn-tr-ghost { background: transparent; border: 1px solid rgba(255,255,255,.3); color: rgba(255,255,255,.8); border-radius: var(--r); padding: .48rem 1.2rem; font-weight: 500; font-size: .74rem; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all .2s; text-decoration: none; display: inline-block; margin-top: .85rem; }
+.btn-tr-ghost:hover { background: rgba(255,255,255,.08); border-color: var(--gold2); color: var(--gold3); }
+
+/* ─── CONTACT ────────────────────────────── */
+.c-left { background: var(--pur); padding: 3rem; height: 100%; }
+.c-right { background: #fff; padding: 3rem; border: 1px solid var(--border); height: 100%; }
+.ci { display: flex; align-items: flex-start; gap: .85rem; margin-bottom: 1.2rem; }
+.ci-ico { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.18); display: flex; align-items: center; justify-content: center; color: var(--gold3); font-size: .82rem; flex-shrink: 0; }
+.ci-lbl { font-size: .58rem; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,.38); font-weight: 600; }
+.ci-val { font-size: .83rem; color: rgba(255,255,255,.82); margin-top: .1rem; line-height: 1.65; }
+.ci-val a { color: rgba(255,255,255,.82); text-decoration: none; transition: color .2s; }
+.ci-val a:hover { color: var(--gold3); }
+.soc-row { display: flex; gap: .5rem; margin-top: 1.5rem; }
+.soc-a { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.55); font-size: .82rem; text-decoration: none; transition: all .2s; }
+.soc-a:hover { background: var(--gold2); color: var(--pur); border-color: var(--gold2); }
+.mz-input {
+  width: 100%; background: var(--off); border: 1px solid var(--border);
+  color: var(--text); padding: .62rem .9rem; font-size: .84rem;
+  font-family: 'Inter', sans-serif; outline: none; transition: border-color .2s;
+  margin-bottom: .7rem; border-radius: var(--r);
+}
+.mz-input:focus { border-color: var(--pur2); background: #fff; }
+.mz-input::placeholder { color: #b0a0c0; }
+.mz-input option { background: #fff; color: var(--text); }
+.msg-ok { display: none; background: rgba(61,0,102,.07); border-left: 3px solid var(--pur2); color: var(--pur2); padding: .55rem .8rem; font-size: .8rem; margin-bottom: .8rem; }
+.msg-ok.show { display: block; }
+.msg-err { display: none; background: rgba(180,0,0,.06); border-left: 3px solid #c0392b; color: #c0392b; padding: .55rem .8rem; font-size: .8rem; margin-bottom: .8rem; }
+.msg-err.show { display: block; }
+.btn-submit { background: var(--pur2); color: #fff; border: none; border-radius: var(--r); padding: .72rem; font-weight: 700; font-size: .8rem; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all .22s; width: 100%; }
+.btn-submit:hover { background: var(--pur3); box-shadow: 0 4px 16px rgba(90,0,153,.3); }
+
+/* ─── FOOTER ─────────────────────────────── */
+footer { background: var(--pur); padding: 4rem 0 2rem; color: #fff; }
+.ft-brand { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: #fff; }
+.ft-tag { font-size: .6rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.3); margin-top: .18rem; }
+footer p { color: rgba(255,255,255,.35); font-size: .78rem; margin-top: .65rem; line-height: 1.7; }
+footer h6 { font-size: .6rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold2); margin-bottom: .9rem; font-weight: 600; }
+footer ul { list-style: none; padding: 0; }
+footer ul li a { color: rgba(255,255,255,.38); font-size: .78rem; text-decoration: none; transition: color .2s; display: block; padding: .2rem 0; }
+footer ul li a:hover { color: var(--gold3); }
+.ft-soc a { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.15); display: inline-flex; align-items: center; justify-content: center; color: rgba(255,255,255,.45); font-size: .8rem; text-decoration: none; transition: all .2s; margin-right: .4rem; }
+.ft-soc a:hover { background: var(--gold2); color: var(--pur); border-color: var(--gold2); }
+.ft-copy { color: rgba(255,255,255,.2); font-size: .68rem; text-align: center; margin-top: 2.4rem; padding-top: 1.4rem; border-top: 1px solid rgba(255,255,255,.07); }
+
+/* ─── CHAT WIDGET ────────────────────────── */
+.chat-fab {
+  position: fixed; bottom: 26px; right: 26px; z-index: 1040;
+  width: 52px; height: 52px; border-radius: 50%; border: none; cursor: pointer;
+  background: var(--pur2); color: var(--gold3); font-size: 1.25rem;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 18px rgba(90,0,153,.45); transition: transform .2s;
+  animation: chatpulse 3s infinite;
+}
+@keyframes chatpulse { 0%,100%{box-shadow:0 4px 18px rgba(90,0,153,.45)}50%{box-shadow:0 4px 28px rgba(90,0,153,.75)} }
+.chat-fab:hover { transform: scale(1.08); background: var(--pur3); }
+.chat-win {
+  position: fixed; bottom: 88px; right: 26px; z-index: 1039;
+  width: 310px; background: #fff; border: 1px solid var(--border);
+  border-radius: 4px; overflow: hidden; display: none; flex-direction: column;
+  box-shadow: 0 14px 44px rgba(61,0,102,.2);
+}
+.chat-win.open { display: flex; }
+.chat-hdr {
+  background: var(--pur2); padding: .82rem 1rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.chat-hdr-l { display: flex; align-items: center; gap: .62rem; }
+.c-av { width: 29px; height: 29px; border-radius: 50%; background: var(--gold2); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 900; color: var(--pur); font-size: .9rem; }
+.c-nm { font-family: 'Playfair Display', serif; font-weight: 700; color: #fff; font-size: .9rem; }
+.c-st { font-size: .58rem; color: rgba(255,255,255,.42); }
+.c-cl { background: none; border: none; color: rgba(255,255,255,.5); cursor: pointer; font-size: .88rem; }
+.chat-body { height: 215px; overflow-y: auto; padding: .82rem; display: flex; flex-direction: column; gap: .48rem; background: var(--off); }
+.chat-body::-webkit-scrollbar { width: 3px; }
+.chat-body::-webkit-scrollbar-thumb { background: var(--border); }
+.cm { max-width: 82%; padding: .44rem .78rem; font-size: .78rem; line-height: 1.55; border-radius: 2px; }
+.cm-b { background: #fff; border: 1px solid var(--border); color: var(--text); align-self: flex-start; }
+.cm-u { background: var(--pur2); color: var(--gold3); align-self: flex-end; }
+.chat-q { padding: .38rem .78rem .55rem; display: flex; flex-wrap: wrap; gap: .28rem; background: var(--off); border-bottom: 1px solid var(--border); }
+.qb { background: #fff; border: 1px solid var(--border); color: var(--pur); font-size: .67rem; padding: .2rem .55rem; cursor: pointer; transition: all .18s; font-weight: 500; border-radius: 20px; }
+.qb:hover { background: var(--pur); color: var(--gold3); border-color: var(--pur); }
+.chat-foot { display: flex; gap: .38rem; padding: .52rem; border-top: 1px solid var(--border); background: #fff; }
+.chat-foot input { flex: 1; background: var(--off); border: 1px solid var(--border); color: var(--text); padding: .36rem .62rem; font-size: .77rem; outline: none; border-radius: var(--r); }
+.chat-foot input:focus { border-color: var(--pur2); }
+.chat-foot button { background: var(--pur2); color: var(--gold3); border: none; border-radius: var(--r); padding: .36rem .68rem; cursor: pointer; font-weight: 700; }
+
+/* ─── ORDER MODAL ────────────────────────── */
+.modal-bg {
+  position: fixed; inset: 0; background: rgba(61,0,102,.6); backdrop-filter: blur(4px);
+  z-index: 1060; display: none; align-items: center; justify-content: center; padding: 1rem;
+}
+.modal-bg.open { display: flex; }
+.mz-modal { background: #fff; border: 1px solid var(--border); max-width: 450px; width: 100%; padding: 2.2rem; position: relative; max-height: 88vh; overflow-y: auto; box-shadow: 0 24px 60px rgba(61,0,102,.22); border-radius: 4px; }
+.mz-modal h3 { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 900; color: var(--pur); margin-bottom: .2rem; }
+.mz-modal p { color: var(--muted); font-size: .8rem; margin-bottom: 1.4rem; }
+.mc-close { position: absolute; top: 1rem; right: 1.1rem; background: none; border: none; color: var(--muted); font-size: 1.1rem; cursor: pointer; }
+
+/* ─── TOAST ──────────────────────────────── */
+.toast-m {
+  position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(14px);
+  background: var(--pur2); color: var(--gold3); padding: .62rem 1.7rem;
+  font-size: .78rem; z-index: 1070; opacity: 0; transition: all .3s; white-space: nowrap;
+  font-weight: 600; box-shadow: 0 4px 16px rgba(90,0,153,.35); border-radius: var(--r);
+}
+.toast-m.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ─── RESPONSIVE ─────────────────────────── */
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .ham-btn { display: flex; }
+  .nav-inner { padding: .8rem 1.3rem; }
+}
+@media (max-width: 640px) {
+  .pgrid { grid-template-columns: repeat(2,1fr); gap: .8rem; }
+  .pc img { height: 200px; }
+  section { padding: 3.8rem 0; }
+  .hero-inner { padding-left: 0; }
+  .chat-win { width: calc(100vw - 32px); right: 16px; }
+  .s-prev, .s-next { width: 36px; height: 36px; font-size: .75rem; }
+  .stat-col { border-right: none; border-bottom: 1px solid var(--border); padding: 1.4rem 1rem; }
+  .c-left, .c-right { height: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────── -->
+<nav class="mz-nav" id="mznav">
+  <div class="nav-inner">
+    <a class="mz-logo" href="#">
+      <div class="logo-gem">M</div>
+      <div class="logo-words">
+        <span class="lw1">MOTUNZ</span>
+        <span class="lw2">Designs</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#catalogue">Catalogue</a>
+      <a href="#training">Training</a>
+      <a href="#contact">Contact</a>
+      <a href="/admin" style="color:var(--pur-mid)">Admin</a>
+      <button class="btn-nav" onclick="openOrder()">Order Now</button>
+    </div>
+    <button class="ham-btn" id="hambtn" onclick="toggleMob()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mob-overlay" id="moboverlay">
+  <a href="#catalogue" onclick="closeMob()">Catalogue</a>
+  <a href="#training" onclick="closeMob()">Training</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+  <a href="/admin">Admin ⚙</a>
+  <button class="btn-gold" onclick="openOrder();closeMob()">Order Now</button>
+</div>
+
+<!-- ── HERO ─────────────────────────────────── -->
+<section class="hero" id="hero">
+  <div id="heroSlides">
+    {% for s in slider %}
+    <div class="hero-slide{% if loop.first %} on{% endif %}" style="background-image:url('{{ s.img }}')"></div>
+    {% endfor %}
+  </div>
+  <button class="s-prev" onclick="prevSlide()"><i class="fa fa-chevron-left"></i></button>
+  <button class="s-next" onclick="nextSlide()"><i class="fa fa-chevron-right"></i></button>
+  <div class="hero-body">
+    <div class="hero-inner" id="heroText"><!-- filled by JS --></div>
+  </div>
+  <div class="s-dots" id="sdots"></div>
+  <div class="scroll-cue"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+
+<!-- ── TICKER ─────────────────────────────── -->
+<div class="ticker"><div class="ticker-track" id="ticker"></div></div>
+
+<!-- ── STATS ──────────────────────────────── -->
+<div class="stats-bar">
+  <div class="container-fluid px-0">
+    <div class="row g-0">
+      <div class="col-6 col-md-3 stat-col"><span class="stat-num" data-t="500">0</span><span class="stat-lbl">Happy Clients</span></div>
+      <div class="col-6 col-md-3 stat-col"><span class="stat-num" data-t="{{ products|length }}">0</span><span class="stat-lbl">Products</span></div>
+      <div class="col-6 col-md-3 stat-col"><span class="stat-num" data-t="8">0</span><span class="stat-lbl">Years Crafting</span></div>
+      <div class="col-6 col-md-3 stat-col"><span class="stat-num" data-t="200">0</span><span class="stat-lbl">Trainees</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CATALOGUE ─────────────────────────── -->
+<section class="sec-white" id="catalogue" style="padding:5.5rem 0">
+  <div class="container">
+    <div class="d-flex align-items-end justify-content-between flex-wrap gap-2 mb-4">
+      <div>
+        <span class="eyebrow">Our Catalogue</span>
+        <h2 class="sec-h">Every Head Has<br/>Its Masterpiece</h2>
+        <div class="gold-rule"></div>
+      </div>
+      <span style="font-size:.72rem;color:var(--muted)"><span id="pCnt">{{ products|length }}</span> pieces</span>
+    </div>
+    <div class="filt-wrap">
+      <button class="filt on" data-f="all">All</button>
+      <button class="filt" data-f="women">Women</button>
+      <button class="filt" data-f="men">Men</button>
+      <button class="filt" data-f="gele">Auto Gele</button>
+      <button class="filt" data-f="fascinator">Fascinators</button>
+      <button class="filt" data-f="headband">Head Bands</button>
+    </div>
+    <div class="pgrid">
+      {% for p in products %}
+      <div class="pc" data-cat="{{ p.cat }}">
+        {% if loop.first %}<div class="pc-new">New</div>{% endif %}
+        <div class="pc-iw">
+          <img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy"/>
+          <div class="pc-ov"><button onclick="openOrder('{{ p.name }}')">Order This</button></div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-cat">{{ {'women':'Women','men':'Men','gele':'Auto Gele','fascinator':'Fascinator','headband':'Head Band','bonnet':'Bonnet'}.get(p.cat, p.cat) }}</div>
+          <div class="pc-name">{{ p.name }}</div>
+          <div class="pc-desc">{{ p.desc }}</div>
+          <div class="pc-price">{{ p.price }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ── PULL QUOTE ─────────────────────────── -->
+<div class="tstrip">
+  <div class="container">
+    <p class="tstrip-quote">"A woman who wears her gele well walks into any room and commands it — that is the Motunz promise."</p>
+    <div class="tstrip-attr">— Motunz Designs · Ikorodu, Lagos</div>
+  </div>
+</div>
+
+<!-- ── TRAINING ───────────────────────────── -->
+<section class="sec-purple" id="training" style="padding:5.5rem 0">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="eyebrow eyebrow-light">Skill Acquisition</span>
+      <h2 class="sec-h sec-h-light">Learn. Create. Earn.</h2>
+      <div class="gold-rule gold-rule-center"></div>
+      <p style="color:rgba(255,255,255,.55);max-width:490px;margin:0 auto;font-size:.86rem;line-height:1.8">Build a skill that pays for life — we train individuals and organisations in the full art of headwear making.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="tr-card">
+          <div class="tr-ico"><i class="fa fa-user"></i></div>
+          <h4>Private Training</h4>
+          <p>One-on-one sessions at your pace — turban caps, auto gele, fascinators & bonnets from scratch.</p>
+          <ul><li>Personalised curriculum</li><li>Starter materials included</li><li>Certificate on completion</li><li>Post-training support</li></ul>
+          <span class="tr-badge">Contact for Quote</span>
+          <a href="#contact" class="btn-tr-ghost">Enquire Now</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="tr-card feat">
+          <div class="tr-ico"><i class="fa fa-building"></i></div>
+          <h4>Corporate Training</h4>
+          <p>Structured workshops for NGOs, skill centres & youth empowerment programs — at your venue or ours.</p>
+          <ul><li>5–30 participants</li><li>Corporate certificates</li><li>Custom program duration</li><li>All materials provided</li></ul>
+          <span class="tr-badge">Bulk Pricing Available</span>
+          <a href="#contact" class="btn-tr">Get a Proposal</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="tr-card">
+          <div class="tr-ico"><i class="fa fa-graduation-cap"></i></div>
+          <h4>Masterclass</h4>
+          <p>Group workshops open to the public — focused day sessions for beginners, hobbyists & learners.</p>
+          <ul><li>Weekend sessions</li><li>Max 10 per class</li><li>All levels welcome</li><li>Networking included</li></ul>
+          <span class="tr-badge">Follow for Schedule</span>
+          <a href="https://youtube.com/@motunzdesigns" target="_blank" class="btn-tr-ghost"><i class="fab fa-youtube me-1"></i>YouTube</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ────────────────────────────── -->
+<section class="sec-white" id="contact" style="padding:5.5rem 0">
+  <div class="container">
+    <div class="text-center mb-5">
+      <span class="eyebrow">Get in Touch</span>
+      <h2 class="sec-h">Let's Talk</h2>
+      <div class="gold-rule gold-rule-center"></div>
+    </div>
+    <div class="row g-0" style="border:1px solid var(--border);overflow:hidden">
+      <div class="col-lg-5">
+        <div class="c-left">
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.55rem;color:#fff;font-weight:900;margin-bottom:1.8rem">Reach Motunz Designs</h3>
+          <div class="ci"><div class="ci-ico"><i class="fa fa-map-marker-alt"></i></div><div><div class="ci-lbl">Address</div><div class="ci-val">4, Elemuren Street, Haruna<br/>Ikorodu, Lagos</div></div></div>
+          <div class="ci"><div class="ci-ico"><i class="fa fa-phone"></i></div><div><div class="ci-lbl">Phone / WhatsApp</div><div class="ci-val"><a href="tel:08063407927">08063407927</a> · <a href="tel:08058808282">08058808282</a><br/><a href="tel:07039544529">07039544529</a></div></div></div>
+          <div class="ci"><div class="ci-ico"><i class="fa fa-envelope"></i></div><div><div class="ci-lbl">Email</div><div class="ci-val"><a href="mailto:motunzdesigns@gmail.com">motunzdesigns@gmail.com</a></div></div></div>
+          <div class="ci"><div class="ci-ico"><i class="fab fa-youtube"></i></div><div><div class="ci-lbl">YouTube</div><div class="ci-val"><a href="https://youtube.com/@motunzdesigns" target="_blank">@motunzdesigns</a></div></div></div>
+          <div class="soc-row">
+            <a class="soc-a" href="https://wa.me/2348063407927" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a class="soc-a" href="https://youtube.com/@motunzdesigns" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a class="soc-a" href="mailto:motunzdesigns@gmail.com"><i class="fa fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="c-right">
+          <h4 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--pur);font-weight:900;margin-bottom:1.3rem">Send a Direct Message</h4>
+          <div class="msg-ok" id="ctOk">✓ Message sent! We'll reach you within 24 hours.</div>
+          <div class="msg-err" id="ctErr"></div>
+          <div class="row g-2">
+            <div class="col-sm-6"><input class="mz-input" id="dmN" type="text" placeholder="Your Name"/></div>
+            <div class="col-sm-6"><input class="mz-input" id="dmP" type="text" placeholder="Phone / WhatsApp"/></div>
+            <div class="col-12">
+              <select class="mz-input" id="dmS">
+                <option value="">What are you interested in?</option>
+                <option>Turban Cap Order</option><option>Auto Gele Order</option>
+                <option>Fascinator Order</option><option>Men's Cap Order</option>
+                <option>Head Band / Bonnet</option><option>Private Training</option>
+                <option>Corporate Training</option><option>General Inquiry</option>
+              </select>
+            </div>
+            <div class="col-12"><textarea class="mz-input" id="dmM" rows="4" placeholder="Tell us what you need…" style="resize:vertical"></textarea></div>
+            <div class="col-12"><button class="btn-submit" onclick="sendContact()"><i class="fab fa-whatsapp me-2"></i>Send via WhatsApp</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="ft-brand">MOTUNZ DESIGNS</div>
+        <div class="ft-tag">Premium Headwear · Lagos Nigeria</div>
+        <p>Turban caps, auto gele, fascinators, head bands, bonnets & men's caps — handcrafted from Ikorodu, Lagos.</p>
+        <div class="ft-soc mt-3">
+          <a href="https://wa.me/2348063407927" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://youtube.com/@motunzdesigns" target="_blank"><i class="fab fa-youtube"></i></a>
+          <a href="mailto:motunzdesigns@gmail.com"><i class="fa fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="col-md-2 col-6"><h6>Products</h6><ul><li><a href="#catalogue">Turban Caps</a></li><li><a href="#catalogue">Auto Gele</a></li><li><a href="#catalogue">Fascinators</a></li><li><a href="#catalogue">Men's Caps</a></li><li><a href="#catalogue">Head Bands</a></li></ul></div>
+      <div class="col-md-2 col-6"><h6>Training</h6><ul><li><a href="#training">Private</a></li><li><a href="#training">Corporate</a></li><li><a href="#training">Masterclass</a></li><li><a href="https://youtube.com/@motunzdesigns" target="_blank">YouTube</a></li></ul></div>
+      <div class="col-md-4"><h6>Contact</h6><ul>
+        <li><a href="tel:08063407927">08063407927</a></li>
+        <li><a href="tel:08058808282">08058808282</a></li>
+        <li><a href="tel:07039544529">07039544529</a></li>
+        <li><a href="mailto:motunzdesigns@gmail.com">motunzdesigns@gmail.com</a></li>
+        <li style="color:rgba(255,255,255,.2);font-size:.74rem;padding-top:.3rem">4, Elemuren St, Haruna, Ikorodu, Lagos</li>
+      </ul></div>
+    </div>
+    <div class="ft-copy">© 2025 Motunz Designs · Ashron Projects Ltd. · <a href="/admin" style="color:rgba(255,255,255,.18);text-decoration:none">Admin</a></div>
+  </div>
+</footer>
+
+<!-- ── CHAT ───────────────────────────────── -->
+<button class="chat-fab" onclick="toggleChat()"><i class="fa fa-comments"></i></button>
+<div class="chat-win" id="chatWin">
+  <div class="chat-hdr">
+    <div class="chat-hdr-l">
+      <div class="c-av">M</div>
+      <div><div class="c-nm">Motunz Designs</div><div class="c-st">Usually replies in minutes</div></div>
+    </div>
+    <button class="c-cl" onclick="toggleChat()"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="chat-body" id="chatBody"><div class="cm cm-b">👋 Hi! Welcome to Motunz Designs. How can we help?</div></div>
+  <div class="chat-q" id="chatQ">
+    <button class="qb" onclick="qs('I want to order a product')">🛍 Order</button>
+    <button class="qb" onclick="qs('Tell me about training')">🎓 Training</button>
+    <button class="qb" onclick="qs('What are your prices?')">💰 Prices</button>
+    <button class="qb" onclick="qs('Where are you located?')">📍 Location</button>
+  </div>
+  <div class="chat-foot">
+    <input id="chatIn" type="text" placeholder="Type a message…" onkeypress="if(event.key==='Enter')sendChat()"/>
+    <button onclick="sendChat()"><i class="fa fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<!-- ── ORDER MODAL ────────────────────────── -->
+<div class="modal-bg" id="orderBg">
+  <div class="mz-modal">
+    <button class="mc-close" onclick="closeOrder()"><i class="fa fa-times"></i></button>
+    <h3>Place an Order</h3>
+    <p>We'll open WhatsApp with your order details ready.</p>
+    <input class="mz-input" id="oN" type="text" placeholder="Your Name"/>
+    <input class="mz-input" id="oP" type="text" placeholder="Phone / WhatsApp Number"/>
+    <select class="mz-input" id="oI">
+      <option value="">Select Product</option>
+      <option>Turban Cap</option><option>Auto Gele</option><option>Fascinator</option>
+      <option>Men's Cap</option><option>Head Band</option><option>Bonnet</option><option>Custom Order</option>
+    </select>
+    <textarea class="mz-input" id="oD" rows="3" placeholder="Colour, size, occasion…" style="resize:vertical"></textarea>
+    <button class="btn-submit mt-1" onclick="placeOrder()"><i class="fab fa-whatsapp me-2"></i>Send via WhatsApp</button>
+  </div>
+</div>
+
+<div class="toast-m" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+const SLIDES = [
+  {% for s in slider %}
+  {tag:"{{ s.tag }}",title:"{{ s.title }}",title2:"{{ s.title2 }}",sub:"{{ s.sub }}",btn1:"{{ s.btn1 }}",btn2:"{{ s.btn2 }}"}{% if not loop.last %},{% endif %}
+  {% endfor %}
+];
+
+// ── NAV SCROLL
+window.addEventListener('scroll', () => {
+  document.getElementById('mznav').classList.toggle('stuck', scrollY > 55);
+});
+
+// ── MOBILE MENU
+function toggleMob() {
+  document.getElementById('hambtn').classList.toggle('open');
+  document.getElementById('moboverlay').classList.toggle('open');
+}
+function closeMob() {
+  document.getElementById('hambtn').classList.remove('open');
+  document.getElementById('moboverlay').classList.remove('open');
+}
+
+// ── HERO SLIDER
+const slides = document.querySelectorAll('.hero-slide');
+const dotsEl = document.getElementById('sdots');
+const heroText = document.getElementById('heroText');
+let curS = 0, autoT;
+
+function renderHeroText(i) {
+  const s = SLIDES[i] || {};
+  heroText.innerHTML = `
+    <div class="h-tag">${s.tag || ''}</div>
+    <h1 class="h-title">${s.title || ''}<br/><em>${s.title2 || ''}</em></h1>
+    ${s.sub ? `<p class="h-sub">${s.sub}</p>` : ''}
+    <div class="h-btns">
+      ${s.btn1 ? `<a href="#catalogue" class="btn-gold">${s.btn1}</a>` : ''}
+      ${s.btn2 ? `<a href="#training" class="btn-ghost-w">${s.btn2}</a>` : ''}
+    </div>`;
+}
+
+slides.forEach((_, i) => {
+  const d = document.createElement('button');
+  d.className = 'sdot' + (i === 0 ? ' on' : '');
+  d.onclick = () => { goSlide(i); resetAuto(); };
+  dotsEl.appendChild(d);
+});
+
+function goSlide(n) {
+  slides[curS].classList.remove('on');
+  document.querySelectorAll('.sdot')[curS].classList.remove('on');
+  curS = (n + slides.length) % slides.length;
+  slides[curS].classList.add('on');
+  document.querySelectorAll('.sdot')[curS].classList.add('on');
+  renderHeroText(curS);
+}
+function nextSlide() { goSlide(curS + 1); resetAuto(); }
+function prevSlide() { goSlide(curS - 1); resetAuto(); }
+function startAuto() { autoT = setInterval(() => goSlide(curS + 1), 4800); }
+function resetAuto() { clearInterval(autoT); startAuto(); }
+
+renderHeroText(0);
+startAuto();
+
+// ── TICKER
+const items = ['Turban Caps','Auto Gele','Fascinators','Men\'s Caps','Head Bands','Bonnets','Private Training','Corporate Training','Lagos Handmade','Premium Quality'];
+const full = [...items, ...items].map(t => `<span>${t}</span><span class="tsep">✦</span>`).join('');
+document.getElementById('ticker').innerHTML = full + full;
+
+// ── COUNTERS
+document.querySelectorAll('[data-t]').forEach(el => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const t = +el.dataset.t; let c = 0;
+        const step = Math.ceil(t / 55);
+        const ti = setInterval(() => {
+          c += step;
+          if (c >= t) { el.textContent = t + '+'; clearInterval(ti); }
+          else el.textContent = c;
+        }, 18);
+      }
+    });
+  }, { threshold: .5 }).observe(el);
+});
+
+// ── FILTER
+document.querySelectorAll('.filt').forEach(btn => btn.addEventListener('click', function () {
+  document.querySelectorAll('.filt').forEach(b => b.classList.remove('on'));
+  this.classList.add('on');
+  const f = this.dataset.f;
+  let v = 0;
+  document.querySelectorAll('.pc').forEach(c => {
+    const show = f === 'all' || c.dataset.cat === f;
+    c.style.display = show ? '' : 'none';
+    if (show) v++;
+  });
+  document.getElementById('pCnt').textContent = v;
+}));
+
+// ── ORDER MODAL
+function openOrder(name = '') {
+  document.getElementById('orderBg').classList.add('open');
+  if (name) document.getElementById('oI').value = name;
+}
+function closeOrder() { document.getElementById('orderBg').classList.remove('open'); }
+document.getElementById('orderBg').addEventListener('click', e => { if (e.target === document.getElementById('orderBg')) closeOrder(); });
+function placeOrder() {
+  const n = document.getElementById('oN').value.trim();
+  const p = document.getElementById('oP').value.trim();
+  const item = document.getElementById('oI').value;
+  const desc = document.getElementById('oD').value.trim();
+  if (!n || !item) { toast('⚠ Enter your name and select a product.'); return; }
+  const t = encodeURIComponent(`Hello Motunz Designs!\n\nName: ${n}\nPhone: ${p}\nProduct: ${item}\nDetails: ${desc || 'N/A'}`);
+  window.open('https://wa.me/2348063407927?text=' + t, '_blank');
+  closeOrder();
+}
+
+// ── CONTACT
+async function sendContact() {
+  const n = document.getElementById('dmN').value.trim();
+  const p = document.getElementById('dmP').value.trim();
+  const s = document.getElementById('dmS').value;
+  const m = document.getElementById('dmM').value.trim();
+  const ok = document.getElementById('ctOk');
+  const err = document.getElementById('ctErr');
+  ok.classList.remove('show'); err.classList.remove('show');
+  if (!n || !m) { err.textContent = '⚠ Name and message are required.'; err.classList.add('show'); return; }
+  try {
+    const fd = new FormData();
+    fd.append('name', n); fd.append('phone', p); fd.append('subject', s); fd.append('message', m);
+    const res = await fetch('/contact', { method: 'POST', body: fd });
+    const data = await res.json();
+    if (data.ok) {
+      ok.classList.add('show');
+      const t = encodeURIComponent(`Hello Motunz Designs!\n\nName: ${n}\nPhone: ${p || 'N/A'}\nInterest: ${s || 'General Inquiry'}\n\nMessage: ${m}`);
+      window.open('https://wa.me/2348063407927?text=' + t, '_blank');
+      document.getElementById('dmN').value = '';
+      document.getElementById('dmP').value = '';
+      document.getElementById('dmM').value = '';
+    } else { err.textContent = '⚠ ' + data.error; err.classList.add('show'); }
+  } catch (e) { err.textContent = '⚠ Connection error. Please try again.'; err.classList.add('show'); }
+}
+
+// ── CHAT
+const BOT = {
+  order: 'Great! Click "Order Now" on any product, or WhatsApp 08063407927. We deliver nationwide! 🚚',
+  training: 'We offer Private, Corporate & Masterclass training. Call 08063407927 to register! 🎓',
+  prices: 'Turban caps from ₦8,000 · Auto gele from ₦15,000 · Fascinators from ₦20,000. DM for a custom quote! 💰',
+  location: '4, Elemuren Street, Haruna, Ikorodu, Lagos. We ship nationwide! 📍',
+  def: 'Please WhatsApp 08063407927 or call 08058808282 for fast help. 😊'
+};
+function toggleChat() { document.getElementById('chatWin').classList.toggle('open'); }
+function addMsg(t, c) {
+  const b = document.getElementById('chatBody');
+  const d = document.createElement('div');
+  d.className = 'cm ' + c; d.textContent = t;
+  b.appendChild(d); b.scrollTop = b.scrollHeight;
+}
+function botReply(t) {
+  t = t.toLowerCase();
+  if (t.includes('order') || t.includes('buy')) return BOT.order;
+  if (t.includes('train') || t.includes('learn')) return BOT.training;
+  if (t.includes('price') || t.includes('cost') || t.includes('much')) return BOT.prices;
+  if (t.includes('location') || t.includes('where') || t.includes('address')) return BOT.location;
+  return BOT.def;
+}
+function sendChat() {
+  const i = document.getElementById('chatIn'); const t = i.value.trim();
+  if (!t) return; addMsg(t, 'cm-u'); i.value = '';
+  document.getElementById('chatQ').style.display = 'none';
+  setTimeout(() => addMsg(botReply(t), 'cm-b'), 500);
+}
+function qs(t) {
+  addMsg(t, 'cm-u');
+  document.getElementById('chatQ').style.display = 'none';
+  setTimeout(() => addMsg(botReply(t), 'cm-b'), 400);
+}
+
+// ── TOAST
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>

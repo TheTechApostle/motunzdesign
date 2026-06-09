@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admin Login – Motunz Designs</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#07000f;--grape:#2d0060;--violet:#5b0ea6;--gold:#c9973a;--gilt:#e8c06a;--r:4px}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.bg{position:fixed;inset:0;background:radial-gradient(ellipse 90% 80% at 50% 40%,rgba(91,14,166,.3) 0%,transparent 70%)}
+.particles{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.p{position:absolute;border-radius:50%;background:var(--gold);animation:pf var(--d,8s) var(--dl,0s) infinite ease-in-out}
+@keyframes pf{0%,100%{opacity:0;transform:translateY(0) scale(0)}20%,80%{opacity:.35}50%{transform:translateY(-80px) scale(1)}}
+.box{
+  position:relative;z-index:2;
+  background:linear-gradient(145deg,rgba(28,0,53,.97),rgba(15,0,31,.99));
+  border:1px solid rgba(201,151,58,.3);border-radius:14px;
+  padding:2.8rem 2.4rem;width:100%;max-width:400px;margin:1rem;
+  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(91,14,166,.2);
+}
+.logo{text-align:center;margin-bottom:2rem}
+.gem{width:58px;height:58px;border-radius:50%;margin:0 auto .7rem;
+  background:conic-gradient(var(--gold),var(--gilt),#fff8dc,var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-weight:900;font-size:1.6rem;color:var(--grape);
+  box-shadow:0 0 0 3px rgba(201,151,58,.25),0 0 30px rgba(201,151,58,.25)}
+h1{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:900;color:var(--gilt)}
+.sub{font-size:.68rem;color:#5a4070;letter-spacing:3px;text-transform:uppercase;margin-top:.2rem}
+.field{margin-bottom:1.2rem}
+label{font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#7a6090;display:block;margin-bottom:.45rem}
+.inp-wrap{position:relative}
+.inp{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(201,151,58,.2);
+  border-radius:var(--r);color:#f5eeff;padding:.7rem 1rem .7rem 2.7rem;
+  font-size:.9rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
+.inp:focus{border-color:var(--gold);background:rgba(201,151,58,.05)}
+.ico{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:#5a4070;font-size:.85rem;pointer-events:none}
+.eye{position:absolute;right:.85rem;top:50%;transform:translateY(-50%);background:none;border:none;color:#5a4070;cursor:pointer;font-size:.85rem;transition:color .2s}
+.eye:hover{color:var(--gilt)}
+.err{background:rgba(255,107,107,.08);border-left:3px solid #ff6b6b;color:#ff8a80;
+  padding:.55rem .8rem;border-radius:var(--r);font-size:.8rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gilt));
+  color:var(--ink);border:none;border-radius:var(--r);padding:.82rem;
+  font-weight:700;font-size:.9rem;letter-spacing:1.5px;text-transform:uppercase;
+  cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:.6rem;margin-top:.4rem}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(201,151,58,.4)}
+.btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.hint{text-align:center;margin-top:1.1rem;font-size:.72rem;color:#3d2560}
+.hint span{color:var(--gilt)}
+.back{display:block;text-align:center;margin-top:.9rem;color:#3d2560;font-size:.72rem;text-decoration:none;transition:color .2s}
+.back:hover{color:var(--gilt)}
+.spinner{width:16px;height:16px;border:2px solid rgba(0,0,0,.2);border-top-color:var(--ink);border-radius:50%;animation:spin .5s linear infinite;display:none}
+@keyframes spin{to{rotate:360deg}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="particles" id="pts"></div>
+<div class="box">
+  <div class="logo">
+    <div class="gem">M</div>
+    <h1>MOTUNZ DESIGNS</h1>
+    <div class="sub">Admin Portal</div>
+  </div>
+  {% if error %}
+  <div class="err"><i class="fa fa-exclamation-circle"></i> {{ error }}</div>
+  {% endif %}
+  <form method="POST" id="lf">
+    <div class="field">
+      <label>Username</label>
+      <div class="inp-wrap">
+        <i class="fa fa-user ico"></i>
+        <input class="inp" name="username" type="text" placeholder="Enter username" autocomplete="off" required/>
+      </div>
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <div class="inp-wrap">
+        <i class="fa fa-lock ico"></i>
+        <input class="inp" name="password" id="pw" type="password" placeholder="Enter password" required/>
+        <button type="button" class="eye" onclick="togglePw()"><i class="fa fa-eye" id="eyeI"></i></button>
+      </div>
+    </div>
+    <button class="btn" id="sb" type="submit">
+      <span id="btnT">Sign In</span>
+      <div class="spinner" id="sp"></div>
+    </button>
+  </form>
+  <p class="hint">Demo: <span>admin</span> / <span>motunz2025</span></p>
+  <a class="back" href="/">← Back to Website</a>
+</div>
+<script>
+document.getElementById('lf').addEventListener('submit',function(){
+  document.getElementById('sb').disabled=true;
+  document.getElementById('btnT').textContent='Signing in…';
+  document.getElementById('sp').style.display='block';
+});
+function togglePw(){const p=document.getElementById('pw'),i=document.getElementById('eyeI');
+  p.type=p.type==='password'?'text':'password';i.className=p.type==='text'?'fa fa-eye-slash':'fa fa-eye';}
+// particles
+(function(){const c=document.getElementById('pts');
+  for(let i=0;i<20;i++){const d=document.createElement('div');d.className='p';
+    const s=(Math.random()*5+3)+'px';
+    d.style.cssText=`width:${s};height:${s};left:${Math.random()*100}%;bottom:${Math.random()*50}%;--d:${(Math.random()*9+4).toFixed(1)}s;--dl:${(Math.random()*6).toFixed(1)}s`;
+    c.appendChild(d);}})();
+</script>
+</body>
+</html>
